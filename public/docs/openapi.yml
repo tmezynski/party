@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
     version: "0.0.1"
     description: "API documentation"
-    title: "Skeleton API"
+    title: "party API"
     contact:
         name: "Tomasz Mężyński"
 servers:

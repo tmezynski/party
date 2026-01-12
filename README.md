@@ -1,4 +1,4 @@
-# Empty project template with Symfony7.4 and PHP8.5
+# Party archetype implementation project with Symfony7.4 and PHP8.5
 
 ## Installation
 

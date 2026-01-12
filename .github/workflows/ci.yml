@@ -14,12 +14,12 @@ jobs:
         runs-on: ubuntu-latest
         env:
             APP_ENV: test
-            DATABASE_URL: postgresql://user:password@localhost:5432/skeleton_test?serverVersion=16&charset=utf8
+            DATABASE_URL: postgresql://user:password@localhost:5432/party_test?serverVersion=16&charset=utf8
         services:
             postgres:
                 image: postgres:18.1-alpine3.23
                 env:
-                    POSTGRES_DB: skeleton_test
+                    POSTGRES_DB: party_test
                     POSTGRES_USER: user
                     POSTGRES_PASSWORD: password
                     POSTGRES_INITDB_ARGS: "--locale=pl_PL.UTF-8"

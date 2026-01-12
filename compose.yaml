@@ -40,7 +40,7 @@ services:
         hostname: "${DOCKER_PROJECT_NAME}-db"
         restart: unless-stopped
         environment:
-            - POSTGRES_DB=skeleton
+            - POSTGRES_DB=party
             - POSTGRES_USER=user
             - POSTGRES_PASSWORD=password
             - POSTGRES_INITDB_ARGS="--locale=pl_PL.UTF-8"
