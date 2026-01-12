@@ -1,0 +1,25 @@
+includes:
+  - phar://phpstan.phar/conf/bleedingEdge.neon
+  - vendor/phpstan/phpstan-symfony/extension.neon
+
+rules:
+  - Utils\PhpStan\AllowOnlyOneExceptionRule
+
+parameters:
+  level: 9
+  parallel:
+    maximumNumberOfProcesses: 8
+    processTimeout: 300.0
+  paths:
+    - src
+    - test
+  excludePaths:
+    - src/Kernel.php
+    - test/bootstrap.php
+  ignoreErrors:
+    -
+        message: '#Method Utils\\ErrorController\\ErrorController::getHttpCode\(\) should return int but returns int<100, 500>\|string.#'
+        path: src/Utils/ErrorController
+    -
+        message: '#\$values of function sprintf expects bool\|float\|int\|string\|null, mixed given#'
+        path: src/Shared/Domain/ValueObject/Decimal/InvalidDecimalException.php

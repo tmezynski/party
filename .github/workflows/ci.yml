@@ -1,0 +1,69 @@
+name: CI
+
+on:
+    push:
+        branches: main
+    pull_request:
+        branches: main
+    release:
+        types: [ published ]
+
+jobs:
+    build:
+        name: Tests
+        runs-on: ubuntu-latest
+        env:
+            APP_ENV: test
+            DATABASE_URL: postgresql://user:password@localhost:5432/skeleton_test?serverVersion=16&charset=utf8
+        services:
+            postgres:
+                image: postgres:18.1-alpine3.23
+                env:
+                    POSTGRES_DB: skeleton_test
+                    POSTGRES_USER: user
+                    POSTGRES_PASSWORD: password
+                    POSTGRES_INITDB_ARGS: "--locale=pl_PL.UTF-8"
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 1s
+                    --health-timeout 1s
+                    --health-retries 20
+                ports:
+                    - 5432:5432
+        steps:
+            -   name: Checkout branch
+                uses: actions/checkout@v4
+
+            -   name: Set up PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: '8.5'
+                    extensions: http
+                    coverage: none
+
+            -   name: Build project
+                run: |
+                    composer install --optimize-autoloader --no-scripts --no-progress --quiet
+                    bin/console cache:warmup
+                    composer test:database:init
+
+            -   name: Run cs-fixer
+                run: composer test:csfixer
+
+            -   name: Run phpstan
+                run: composer test:phpstan
+
+            -   name: Run deptrac
+                run: composer test:deptrac
+
+            -   name: Run mess detector
+                run: composer test:md
+
+            -   name: Unit tests
+                run: composer test:unit
+
+            -   name: Integration tests
+                run: composer test:integration
+
+            -   name: Acceptance tests
+                run: composer test:acceptance

@@ -1,0 +1,147 @@
+{
+  "type": "project",
+  "license": "proprietary",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.5",
+    "ext-bcmath": "*",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "ext-http": "*",
+    "doctrine/doctrine-bundle": "^3.2",
+    "doctrine/doctrine-migrations-bundle": "^3.4",
+    "doctrine/orm": "^3.6",
+    "ramsey/uuid": "^4.9",
+    "sentry/sentry-symfony": "^5.8",
+    "symfony/console": "7.4.*",
+    "symfony/doctrine-messenger": "7.4.*",
+    "symfony/dotenv": "7.4.*",
+    "symfony/flex": "^2.8",
+    "symfony/framework-bundle": "7.4.*",
+    "symfony/messenger": "7.4.*",
+    "symfony/monolog-bundle": "^3.10",
+    "symfony/property-access": "7.4.*",
+    "symfony/routing": "7.4.*",
+    "symfony/runtime": "7.4.*",
+    "symfony/serializer": "7.4.*"
+  },
+  "require-dev": {
+    "behat/behat": "^3.29",
+    "deptrac/deptrac": "^4.4",
+    "friends-of-behat/symfony-extension": "^2.6",
+    "friendsofphp/php-cs-fixer": "^3.92",
+    "infection/infection": "^0.32.2",
+    "phpmd/phpmd": "^2.15",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-symfony": "^2.0",
+    "phpunit/phpunit": "^12.5",
+    "symfony/phpunit-bridge": "^8.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "infection/extension-installer": true,
+      "php-http/discovery": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
+    "sort-packages": true,
+    "process-timeout": 0
+  },
+  "autoload": {
+    "files": [
+      "src/Kernel.php"
+    ],
+    "psr-4": {
+      "Shared\\": "src/Shared",
+      "Utils\\": "src/Utils"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\": "test"
+    }
+  },
+  "replace": {
+    "symfony/polyfill-ctype": "*",
+    "symfony/polyfill-iconv": "*",
+    "symfony/polyfill-php72": "*",
+    "symfony/polyfill-php73": "*",
+    "symfony/polyfill-php74": "*",
+    "symfony/polyfill-php80": "*",
+    "symfony/polyfill-php81": "*"
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
+    "post-install-cmd": [
+      "@auto-scripts",
+      "@migrations"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts"
+    ],
+    "test:phpstan": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpstan analyse -c stan.neon --no-progress --no-interaction --no-ansi"
+    ],
+    "test:csfixer": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --dry-run --diff --allow-risky=yes"
+    ],
+    "test:csfixer:fix": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --config=php-cs-fixer.php --diff --allow-risky=yes --quiet"
+    ],
+    "test:deptrac": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/deptrac analyse --config-file=deptrac.yaml --cache-file=var/.deptrac.cache --fail-on-uncovered --report-uncovered"
+    ],
+    "test:md": [
+      "php -d xdebug.mode=off vendor/bin/phpmd src,test text phpmd.xml"
+    ],
+    "test:unit": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit --no-coverage"
+    ],
+    "test:integration": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/phpunit --configuration=phpunit.xml --testsuite=integration --no-coverage"
+    ],
+    "test:acceptance": [
+      "APP_ENV=behat php -d xdebug.mode=off vendor/bin/behat --strict --format progress --no-colors"
+    ],
+    "test:coverage": [
+      "APP_ENV=test php -d xdebug.mode=coverage vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit,integration --disable-coverage-ignore"
+    ],
+    "test:coverage:path": [
+      "APP_ENV=test php -d xdebug.mode=coverage vendor/bin/phpunit --configuration=phpunit.xml --testsuite=unit,integration --strict-coverage --disable-coverage-ignore"
+    ],
+    "test:mutation": [
+      "APP_ENV=test php -d xdebug.mode=off vendor/bin/infection --configuration=infection.json --show-mutations"
+    ],
+    "test:database:init": [
+      "APP_ENV=test bin/console doctrine:database:create --if-not-exists",
+      "@test:database:migrations:run"
+    ],
+    "test:database:migrations:run": [
+      "APP_ENV=test bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet"
+    ],
+    "database:init": [
+      "bin/console doctrine:database:create --if-not-exists",
+      "@database:migrations:run"
+    ],
+    "database:migrations:run": [
+      "bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration --quiet"
+    ],
+    "database:migration:create": [
+      "bin/console doctrine:migrations:generate"
+    ]
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "7.4.*"
+    }
+  }
+}

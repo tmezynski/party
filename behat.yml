@@ -1,0 +1,17 @@
+default:
+  suites:
+    default:
+      paths: [ 'test/Acceptance' ]
+      contexts:
+        - Test\Utils\Context\DatabaseContext
+        - Test\Utils\Context\TimeContext
+        - Test\Utils\Context\DemoContext
+
+  extensions:
+    FriendsOfBehat\SymfonyExtension:
+      bootstrap: test/bootstrap.php
+      kernel:
+        path: src/Kernel.php
+        class: src\Kernel
+        environment: test
+        debug: false

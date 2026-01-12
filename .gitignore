@@ -1,0 +1,12 @@
+/.idea/
+/.vscode/
+
+/var/
+/vendor/
+
+/.env.local
+/.env.*.local
+
+###> deptrac/deptrac ###
+/.deptrac.cache
+###< deptrac/deptrac ###

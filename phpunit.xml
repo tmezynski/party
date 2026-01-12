@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+        bootstrap="test/bootstrap.php"
+        cacheDirectory="var/.phpunit.cache"
+        stopOnFailure="false"
+        failOnWarning="true"
+>
+    <php>
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        <server name="APP_ENV" value="test" force="true"/>
+        <server name="KERNEL_CLASS" value="src\Kernel"/>
+        <server name="SHELL_VERBOSITY" value="-1"/>
+        <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="unit">
+            <directory suffix="Test.php">test/Unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix="Test.php">test/Integration</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage disableCodeCoverageIgnore="true">
+        <report>
+            <html outputDirectory="var/coverage"/>
+        </report>
+    </coverage>
+
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory prefix="Version202">src</directory>
+            <file>src/Kernel.php</file>
+        </exclude>
+    </source>
+</phpunit>
