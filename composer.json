@@ -54,6 +54,7 @@
       "src/Kernel.php"
     ],
     "psr-4": {
+      "Party\\": "src/Party",
       "Shared\\": "src/Shared",
       "Utils\\": "src/Utils"
     }

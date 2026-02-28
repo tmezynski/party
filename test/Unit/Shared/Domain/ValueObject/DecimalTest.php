@@ -35,7 +35,7 @@ final class DecimalTest extends TestCase
     #[DataProvider('validDecimalDataProvider')]
     public function canCreateDecimalFromValue(float|int|string $value, string $result): void
     {
-        Assert::assertEquals($result, Decimal::from($value)->toString());
+        Assert::assertEquals($result, (string)Decimal::from($value));
     }
 
     public static function validDecimalDataProvider(): Generator
@@ -210,7 +210,7 @@ final class DecimalTest extends TestCase
     {
         $this->assertEquals(
             $result,
-            Decimal::from($value)->round($precision)->toString(),
+            (string)Decimal::from($value)->round($precision),
         );
     }
 

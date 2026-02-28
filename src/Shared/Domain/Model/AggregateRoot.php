@@ -9,12 +9,12 @@ use Shared\Domain\Event\SyncEvent;
 
 abstract class AggregateRoot
 {
+    protected int $version = 0;
+
     /**
      * @var AsyncEvent[]|SyncEvent[]
      */
     protected array $events = [];
-
-    protected int $version = 0;
 
     /**
      * @return AsyncEvent[]|SyncEvent[]
@@ -27,7 +27,7 @@ abstract class AggregateRoot
         return $events;
     }
 
-    public function addEvent(AsyncEvent|SyncEvent $event): void
+    protected function recordThat(AsyncEvent|SyncEvent $event): void
     {
         $this->events[] = $event;
     }

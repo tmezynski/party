@@ -44,17 +44,17 @@ final readonly class Decimal
 
     public function add(Decimal $other): Decimal
     {
-        return new self(bcadd($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other)));
+        return new self(bcadd($this->value, $other->value, $this->getFractionFromValues($this, $other)));
     }
 
     public function sub(Decimal $other): Decimal
     {
-        return new self(bcsub($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other)));
+        return new self(bcsub($this->value, $other->value, $this->getFractionFromValues($this, $other)));
     }
 
     public function mul(Decimal $other): Decimal
     {
-        return new self(bcmul($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other)));
+        return new self(bcmul($this->value, $other->value, $this->getFractionFromValues($this, $other)));
     }
 
     /**
@@ -62,16 +62,16 @@ final readonly class Decimal
      */
     public function div(Decimal $other): Decimal
     {
-        if ('0' === $other->toString()) {
+        if ('0' === (string)$other) {
             throw InvalidDecimalException::divisionByZero();
         }
 
-        return new self(bcdiv($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other)));
+        return new self(bcdiv($this->value, $other->value, $this->getFractionFromValues($this, $other)));
     }
 
     public function equals(Decimal $other): bool
     {
-        return 0 === bccomp($this->toString(), $other->toString(), $this->getFractionFromValues($this, $other));
+        return 0 === bccomp($this->value, $other->value, $this->getFractionFromValues($this, $other));
     }
 
     /**
@@ -83,13 +83,13 @@ final readonly class Decimal
             throw InvalidDecimalException::notValidPrecision($precision);
         }
 
-        return self::from(round((float)$this->toString(), $precision));
+        return self::from(round((float)$this->value, $precision));
     }
 
     /**
      * @return numeric-string
      */
-    public function toString(): string
+    public function __toString(): string
     {
         return $this->value;
     }
@@ -109,8 +109,8 @@ final readonly class Decimal
         $result = self::MIN_FRACTION_ACCURACY;
 
         foreach ($amounts as $amount) {
-            $fraction = strpos($amount->toString(), self::FRACTION_CHARACTER);
-            $result = max($result, false === $fraction ? 0 : strlen($amount->toString()) - 1 - $fraction);
+            $fraction = strpos($amount->value, self::FRACTION_CHARACTER);
+            $result = max($result, false === $fraction ? 0 : strlen($amount->value) - 1 - $fraction);
         }
 
         return $result;
