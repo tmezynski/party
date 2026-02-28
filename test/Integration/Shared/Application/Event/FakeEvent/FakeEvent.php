@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Utils\TestDoubles\Event\Fake;
+namespace Test\Integration\Shared\Application\Event\FakeEvent;
 
 use Shared\Domain\Event\SyncEvent;
 

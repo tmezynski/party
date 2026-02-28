@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Test\Integration\Shared\Application\Event;
+namespace Test\Integration\Shared\Application\Event\FakeEvent;
 
 use PHPUnit\Framework\Attributes\Test;
 use Test\Integration\IntegrationTestCase;
 use Test\Utils\Dsl\Shared\CommandBusTrait;
-use Test\Utils\TestDoubles\Event\Fake\FakeEvent;
 
 final class FakeEventTest extends IntegrationTestCase
 {

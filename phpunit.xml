@@ -6,6 +6,11 @@
         cacheDirectory="var/.phpunit.cache"
         stopOnFailure="false"
         failOnWarning="true"
+        displayDetailsOnTestsThatTriggerDeprecations="true"
+        displayDetailsOnTestsThatTriggerErrors="true"
+        displayDetailsOnTestsThatTriggerNotices="true"
+        displayDetailsOnTestsThatTriggerWarnings="true"
+        displayDetailsOnPhpunitDeprecations="true"
 >
     <php>
         <ini name="display_errors" value="1"/>

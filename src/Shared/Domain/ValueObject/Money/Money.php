@@ -88,11 +88,11 @@ final readonly class Money
     /**
      * @throws InvalidDecimalException
      */
-    public function toString(): string
+    public function __toString(): string
     {
         return sprintf(
             '%s %s',
-            $this->amount->round($this->currency->fraction())->toString(),
+            (string)$this->amount->round($this->currency->fraction()),
             $this->currency->name,
         );
     }
@@ -103,7 +103,7 @@ final readonly class Money
     public function toMemento(): array
     {
         return [
-            'amount' => $this->amount->toString(),
+            'amount' => (string)$this->amount,
             'currency' => $this->currency->name,
         ];
     }

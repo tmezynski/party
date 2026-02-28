@@ -48,7 +48,7 @@ final class UuidTest extends TestCase
     {
         $uuid = Uuid::fromString('a6ef8e41-155b-4b92-8dd6-abd8383f99f4');
 
-        Assert::assertEquals('a6ef8e41-155b-4b92-8dd6-abd8383f99f4', $uuid->toString());
+        Assert::assertEquals('a6ef8e41-155b-4b92-8dd6-abd8383f99f4', (string)$uuid);
     }
 
     #[Test]
@@ -64,6 +64,6 @@ final class UuidTest extends TestCase
 
         Assert::assertTrue($uuid1->equals($uuid2));
         Assert::assertFalse($uuid2->equals($uuid3));
-        Assert::assertEquals('80764b88-b503-5b6b-b972-c7e533a5d8c5', $uuid1->toString());
+        Assert::assertEquals('80764b88-b503-5b6b-b972-c7e533a5d8c5', (string)$uuid1);
     }
 }

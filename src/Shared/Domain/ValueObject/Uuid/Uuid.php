@@ -10,6 +10,9 @@ final readonly class Uuid
 {
     private function __construct(private string $value)
     {
+        if (!RamseyUuid::isValid($value)) {
+            throw new InvalidUuidException($value);
+        }
     }
 
     public static function generateRandom(): self
@@ -19,11 +22,7 @@ final readonly class Uuid
 
     public static function fromString(string $value): self
     {
-        if (RamseyUuid::isValid($value)) {
-            return new self($value);
-        }
-
-        throw new InvalidUuidException($value);
+        return new self($value);
     }
 
     public static function fromStringAndNamespace(string $value, string $namespace): self
@@ -41,10 +40,10 @@ final readonly class Uuid
 
     public function equals(self $uuid): bool
     {
-        return $this->toString() === $uuid->value;
+        return $this->value === $uuid->value;
     }
 
-    public function toString(): string
+    public function __toString(): string
     {
         return $this->value;
     }
