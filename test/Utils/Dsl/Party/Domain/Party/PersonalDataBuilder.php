@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Test\Utils\Dsl\Party\Domain\Party;
 
 use Party\Domain\Party\Person\Gender;
-use Party\Domain\Party\Person\PersonalData\PersonalData;
-use Party\Domain\Party\Person\Title;
+use Party\Domain\Party\Person\PersonalName\PersonName;
+use Party\Domain\Party\Person\Prefix;
 
 final class PersonalDataBuilder
 {
@@ -15,23 +15,23 @@ final class PersonalDataBuilder
         private string $middleName,
         private string $lastName,
         private Gender $gender,
-        private Title $title,
+        private Prefix $title,
     ) {
     }
 
     public static function aMale(): self
     {
-        return new self('John', 'Doe', 'Smith', Gender::Male, Title::Mr);
+        return new self('John', 'Doe', 'Smith', Gender::Male, Prefix::Mr);
     }
 
     public static function aFemale(): self
     {
-        return new self('Sue', 'B', 'Green', Gender::Female, Title::Ms);
+        return new self('Sue', 'B', 'Green', Gender::Female, Prefix::Ms);
     }
 
-    public function build(): PersonalData
+    public function build(): PersonName
     {
-        return new PersonalData(
+        return new PersonName(
             $this->firstName,
             $this->middleName,
             $this->lastName,

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Party\Domain\Party\Event;
+namespace Party\Domain\Party\RegisteredIdentifier\Event;
 
 use Party\Domain\Party\Id\Id;
 use Party\Domain\Party\RegisteredIdentifier\RegisteredIdentifier;

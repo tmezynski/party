@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Party\Domain\Party\Person;
 
-enum Title
+enum Prefix
 {
     case Mr;
     case Ms;

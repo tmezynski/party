@@ -20,7 +20,7 @@ final class AggregateRootTest extends TestCase
 
         AssertAggregateRoot::aAggregate($sut)
             ->isInVersion(0)
-            ->hasEvents(0);
+            ->recordedNumberOfEvents(0);
     }
 
     #[Test]
@@ -35,7 +35,7 @@ final class AggregateRootTest extends TestCase
         Assert::assertCount(1, $events);
         AssertAggregateRoot::aAggregate($sut)
             ->isInVersion(0)
-            ->hasEvents(0);
+            ->recordedNumberOfEvents(0);
     }
 
     private function createEvent(): SyncEvent

@@ -18,17 +18,20 @@ enum ErrorCode: int
     case InvalidUuidString = 1004;
     case InvalidEnumName = 1005;
     case OptimisticLockException = 1006;
+    case InvalidDateTimeFormat = 1007;
+    case InvalidTimeRange = 1008;
     case UnknownResultWhileAddingRegisteredIdentifier = 2000;
     case UnknownResultWhileRemovingRegisteredIdentifier = 2001;
     case PartyNotFound = 2002;
     case EmptyPersonalData = 2100;
+    case EmptyOrganisationName = 2101;
 
     public function httpCode(): int
     {
         return match ($this) {
-            self::InvalidEnumName,
-            self::PartyNotFound => 404,
+            self::InvalidEnumName, self::PartyNotFound => 404,
             self::OptimisticLockException => 409,
+            self::InvalidTimeRange, self::EmptyPersonalData, self::EmptyOrganisationName => 422,
             default => 500,
         };
     }

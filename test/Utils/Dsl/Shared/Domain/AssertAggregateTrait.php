@@ -33,7 +33,7 @@ trait AssertAggregateTrait
         return $this;
     }
 
-    public function hasEvents(int $value): self
+    public function recordedNumberOfEvents(int $value): self
     {
         /** @var array<AsyncEvent|SyncEvent> $events */
         $events = $this->getProperty('events');
@@ -42,7 +42,7 @@ trait AssertAggregateTrait
         return $this;
     }
 
-    public function producedEvent(AsyncEvent|SyncEvent $expected): self
+    public function recordedEvent(AsyncEvent|SyncEvent $expected): self
     {
         /** @var array<AsyncEvent|SyncEvent> $events */
         $events = $this->getProperty('events');

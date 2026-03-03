@@ -17,7 +17,7 @@ final class RegisteredIdentifierCollectionTest extends TestCase
     {
         $sut = RegisteredIdentifierCollectionBuilder::aRegisteredIdentifiersWith();
 
-        AssertRegisteredIdentifierCollection::aCollection($sut)
+        AssertRegisteredIdentifierCollection::assertThat($sut)
             ->isEmpty();
     }
 
@@ -30,7 +30,7 @@ final class RegisteredIdentifierCollectionTest extends TestCase
         $result = $sut->add($item);
 
         Assert::assertTrue($result->isSuccess());
-        AssertRegisteredIdentifierCollection::aCollection($sut)
+        AssertRegisteredIdentifierCollection::assertThat($sut)
             ->contains($item);
     }
 
@@ -43,7 +43,7 @@ final class RegisteredIdentifierCollectionTest extends TestCase
         $result = $sut->add($item);
 
         Assert::assertTrue($result->isSkipped());
-        AssertRegisteredIdentifierCollection::aCollection($sut)
+        AssertRegisteredIdentifierCollection::assertThat($sut)
             ->contains($item);
     }
 
@@ -56,7 +56,7 @@ final class RegisteredIdentifierCollectionTest extends TestCase
         $result = $sut->remove($item);
 
         Assert::assertTrue($result->isSuccess());
-        AssertRegisteredIdentifierCollection::aCollection($sut)
+        AssertRegisteredIdentifierCollection::assertThat($sut)
             ->isEmpty();
     }
 
@@ -70,7 +70,7 @@ final class RegisteredIdentifierCollectionTest extends TestCase
         $result = $sut->remove($item2);
 
         Assert::assertTrue($result->isSkipped());
-        AssertRegisteredIdentifierCollection::aCollection($sut)
+        AssertRegisteredIdentifierCollection::assertThat($sut)
             ->hasCount(1)
             ->contains($item1);
     }

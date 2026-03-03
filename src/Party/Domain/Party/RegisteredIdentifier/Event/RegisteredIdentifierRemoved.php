@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Party\Domain\Party\Event;
+namespace Party\Domain\Party\RegisteredIdentifier\Event;
 
 use Party\Domain\Party\Id\Id;
 use Party\Domain\Party\RegisteredIdentifier\RegisteredIdentifier;
 use Shared\Domain\Event\AsyncEvent;
 
-final readonly class RegisterIdentifierAddSkipped implements AsyncEvent
+final class RegisteredIdentifierRemoved implements AsyncEvent
 {
     public function __construct(public Id $id, public RegisteredIdentifier $registeredIdentifier)
     {

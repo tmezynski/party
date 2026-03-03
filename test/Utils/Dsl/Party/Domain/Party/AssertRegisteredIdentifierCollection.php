@@ -23,7 +23,7 @@ final class AssertRegisteredIdentifierCollection
     /**
      * @param Collection<RegisteredIdentifier> $registeredIdentifiers
      */
-    public static function aCollection(Collection $registeredIdentifiers): self
+    public static function assertThat(Collection $registeredIdentifiers): self
     {
         return new self($registeredIdentifiers);
     }
