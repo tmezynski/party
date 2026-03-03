@@ -21,16 +21,16 @@ final class PersonTest extends TestCase
     public function skipUpdatePersonalDataWhenUpdatingWithSameValues(): void
     {
         $sut = PersonBuilder::aMale()->build();
-        $personalData = $sut->personalData();
+        $personalData = PersonalDataBuilder::aMale()->build();
 
         $result = $sut->updatePersonalData($personalData);
 
         Assert::assertTrue($result->isSkipped());
-        AssertPerson::aPerson($sut)
+        AssertPerson::assertThat($sut)
             ->hasPersonalData($personalData)
             ->isInVersion(0)
-            ->hasEvents(1)
-            ->producedEvent(
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(
                 new PersonalDataSkipped(
                     id: new Id(Uuid::fromString(PersonBuilder::DEFAULT_ID)),
                     personalData: $personalData,
@@ -47,11 +47,11 @@ final class PersonTest extends TestCase
         $result = $sut->updatePersonalData($newPersonalData);
 
         Assert::assertTrue($result->isSuccess());
-        AssertPerson::aPerson($sut)
+        AssertPerson::assertThat($sut)
             ->hasPersonalData($newPersonalData)
             ->isInVersion(0)
-            ->hasEvents(1)
-            ->producedEvent(
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(
                 new PersonalDataUpdated(
                     id: new Id(Uuid::fromString(PersonBuilder::DEFAULT_ID)),
                     personalData: $newPersonalData,

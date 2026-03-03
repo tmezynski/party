@@ -8,6 +8,10 @@ enum Gender
 {
     case Male;
     case Female;
-    case NotProvided;
+
+    // we don't have data
     case Unknown;
+
+    // person has chosen no to specify the gender
+    case NotProvided;
 }

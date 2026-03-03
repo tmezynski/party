@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Party\Domain\Party\Person\PersonalData;
+namespace Party\Domain\Party\Person\PersonalName;
 
 use Utils\Exception\DetailedException;
 use Utils\Exception\ErrorCode;
 
-final class EmptyPersonalData extends DetailedException
+final class EmptyPersonalDataException extends DetailedException
 {
     public function __construct()
     {

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Party\Domain\Party;
 
-use Party\Domain\Party\Event\RegisteredIdentifierAdded;
-use Party\Domain\Party\Event\RegisteredIdentifierRemoved;
-use Party\Domain\Party\Event\RegisterIdentifierAddSkipped;
-use Party\Domain\Party\Event\RegisterIdentifierRemoveSkipped;
 use Party\Domain\Party\Exception\ResultNotRecognizedException;
 use Party\Domain\Party\Id\Id;
 use Party\Domain\Party\RegisteredIdentifier\Constraints;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisteredIdentifierAdded;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisteredIdentifierRemoved;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisterIdentifierAddSkipped;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisterIdentifierRemoveSkipped;
 use Party\Domain\Party\RegisteredIdentifier\RegisteredIdentifier;
 use Shared\Domain\Model\AggregateRoot;
 use Utils\Collection\Collection;

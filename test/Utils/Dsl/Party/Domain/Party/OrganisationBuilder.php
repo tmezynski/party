@@ -5,22 +5,26 @@ declare(strict_types=1);
 namespace Test\Utils\Dsl\Party\Domain\Party;
 
 use Party\Domain\Party\Id\Id;
-use Party\Domain\Party\Party;
+use Party\Domain\Party\Organisation;
+use Party\Domain\Party\Organisation\OrganisationName;
 use Party\Domain\Party\RegisteredIdentifier\Constraints;
 use Party\Domain\Party\RegisteredIdentifier\RegisteredIdentifier;
 use Shared\Domain\ValueObject\Uuid\Uuid;
 use Utils\Collection\Collection;
 
-final class PartyBuilder
+final class OrganisationBuilder
 {
     /**
      * @param Collection<RegisteredIdentifier> $registeredIdentifiers
      */
-    public function __construct(private Id $id, private Collection $registeredIdentifiers)
-    {
+    public function __construct(
+        private Id $id,
+        private Collection $registeredIdentifiers,
+        private OrganisationName $organisationName,
+    ) {
     }
 
-    public static function aParty(): self
+    public static function anOrganisation(): self
     {
         /** @var Collection<RegisteredIdentifier> $collection */
         $collection = Collection::of();
@@ -28,25 +32,25 @@ final class PartyBuilder
         return new self(
             new Id(Uuid::generateRandom()),
             $collection,
+            new OrganisationName('Organisation Name'),
         );
     }
 
-    public function withRegisteredIdentifiers(RegisteredIdentifier ...$registeredIdentifiers): self
+    public function withOrganisationName(OrganisationName $organisationName): self
     {
-        /** @var Collection<RegisteredIdentifier> $collection */
-        $collection = Collection::of(...$registeredIdentifiers);
-        $this->registeredIdentifiers = $collection;
+        $this->organisationName = $organisationName;
 
         return $this;
     }
 
-    public function build(): Party
+    public function build(): Organisation
     {
         return new class (
             $this->id,
             $this->registeredIdentifiers,
             new Constraints([]),
-        ) extends Party {
+            $this->organisationName,
+        ) extends Organisation {
         };
     }
 }

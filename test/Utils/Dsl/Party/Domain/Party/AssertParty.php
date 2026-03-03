@@ -18,7 +18,7 @@ final class AssertParty
         $this->setReflection($party);
     }
 
-    public static function aParty(Party $party): self
+    public static function assertThat(Party $party): self
     {
         return new self($party);
     }
@@ -27,7 +27,7 @@ final class AssertParty
     {
         /** @var Collection<RegisteredIdentifier> $registeredIdentifiers */
         $registeredIdentifiers = $this->getProperty('registeredIdentifiers');
-        AssertRegisteredIdentifierCollection::aCollection($registeredIdentifiers)
+        AssertRegisteredIdentifierCollection::assertThat($registeredIdentifiers)
             ->contains(...$expectedRegisteredIdentifiers);
 
         return $this;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Test\Unit\Party\Domain\Party\Party;
 
-use Party\Domain\Party\Event\RegisteredIdentifierAdded;
-use Party\Domain\Party\Event\RegisteredIdentifierRemoved;
-use Party\Domain\Party\Event\RegisterIdentifierAddSkipped;
-use Party\Domain\Party\Event\RegisterIdentifierRemoveSkipped;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisteredIdentifierAdded;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisteredIdentifierRemoved;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisterIdentifierAddSkipped;
+use Party\Domain\Party\RegisteredIdentifier\Event\RegisterIdentifierRemoveSkipped;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Test\Unit\Party\Domain\Party\RegisteredIdentifier\FakeRegisteredIdentifier;
@@ -25,10 +25,10 @@ final class PartyTest extends TestCase
         $result = $sut->addRegisteredIdentifier($registeredIdentifier);
 
         self::assertTrue($result->isSuccess());
-        AssertParty::aParty($sut)
+        AssertParty::assertThat($sut)
             ->isInVersion(0)
-            ->hasEvents(1)
-            ->producedEvent(new RegisteredIdentifierAdded($sut->id(), $registeredIdentifier));
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(new RegisteredIdentifierAdded($sut->id(), $registeredIdentifier));
     }
 
     #[Test]
@@ -42,9 +42,9 @@ final class PartyTest extends TestCase
         $result = $sut->addRegisteredIdentifier($registeredIdentifier);
 
         self::assertTrue($result->isSkipped());
-        AssertParty::aParty($sut)
-            ->hasEvents(1)
-            ->producedEvent(new RegisterIdentifierAddSkipped($sut->id(), $registeredIdentifier));
+        AssertParty::assertThat($sut)
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(new RegisterIdentifierAddSkipped($sut->id(), $registeredIdentifier));
     }
 
     #[Test]
@@ -59,10 +59,10 @@ final class PartyTest extends TestCase
         $result = $sut->removeRegisteredIdentifier($registeredIdentifier1);
 
         self::assertTrue($result->isSuccess());
-        AssertParty::aParty($sut)
+        AssertParty::assertThat($sut)
             ->hasRegisteredIdentifiers($registeredIdentifier2)
-            ->hasEvents(1)
-            ->producedEvent(new RegisteredIdentifierRemoved($sut->id(), $registeredIdentifier1));
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(new RegisteredIdentifierRemoved($sut->id(), $registeredIdentifier1));
     }
 
     #[Test]
@@ -74,8 +74,8 @@ final class PartyTest extends TestCase
         $result = $sut->removeRegisteredIdentifier($registeredIdentifier);
 
         self::assertTrue($result->isSkipped());
-        AssertParty::aParty($sut)
-            ->hasEvents(1)
-            ->producedEvent(new RegisterIdentifierRemoveSkipped($sut->id(), $registeredIdentifier));
+        AssertParty::assertThat($sut)
+            ->recordedNumberOfEvents(1)
+            ->recordedEvent(new RegisterIdentifierRemoveSkipped($sut->id(), $registeredIdentifier));
     }
 }

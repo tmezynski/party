@@ -6,7 +6,7 @@ namespace Test\Utils\Dsl\Party\Domain\Party;
 
 use Party\Domain\Party\Id\Id;
 use Party\Domain\Party\Person;
-use Party\Domain\Party\Person\PersonalData\PersonalData;
+use Party\Domain\Party\Person\PersonalName\PersonName;
 use Party\Domain\Party\RegisteredIdentifier\Constraints;
 use Party\Domain\Party\RegisteredIdentifier\RegisteredIdentifier;
 use Shared\Domain\ValueObject\Uuid\Uuid;
@@ -19,7 +19,7 @@ final class PersonBuilder
     /**
      * @param Collection<RegisteredIdentifier> $registeredIdentifiers
      */
-    private function __construct(private Id $id, private PersonalData $personalData, private Collection $registeredIdentifiers)
+    private function __construct(private Id $id, private PersonName $personName, private Collection $registeredIdentifiers)
     {
     }
 
@@ -30,7 +30,7 @@ final class PersonBuilder
 
         return new self(
             id: new Id(Uuid::fromString(self::DEFAULT_ID)),
-            personalData: PersonalDataBuilder::aMale()->build(),
+            personName: PersonalDataBuilder::aMale()->build(),
             registeredIdentifiers: $collection,
         );
     }
@@ -39,7 +39,7 @@ final class PersonBuilder
     {
         return new Person(
             id: $this->id,
-            personalData: $this->personalData,
+            personName: $this->personName,
             registeredIdentifiers: $this->registeredIdentifiers,
             constraints: new Constraints([]),
         );
